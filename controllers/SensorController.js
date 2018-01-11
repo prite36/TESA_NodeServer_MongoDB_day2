@@ -29,22 +29,46 @@ schemaController.save = function(req, res) {
   var allTeam = {}
   allTeam.data = {}
   teamNumber.forEach((number) => {
-    allTeam.data['team'+number] = {}
     request('http://10.0.0.10/api/temperature/'+number+'/all', function(error, response, body) {
-      var data = JSON.parse(body);
-        allTeam.data['team'+number].temp = checkData(data)
-      request('http://10.0.0.10/api/accelerometer/'+number+'/all', function(error, response, body) {
-        var data = JSON.parse(body);
-        allTeam.data['team'+number].accelerometer = checkData(data)
-        request('http://10.0.0.10/api/din1/'+number+'/all', function(error, response, body) {
-          var data = JSON.parse(body);
-          allTeam.data['team'+number].din1 = checkData(data)
-          if (teamNumber[teamNumber.length-1] === number) {
-          // insert_to_db('allTeam', allTeam)
-          res.send(allTeam)
-          }
-        })
+      var data = JSON.parse(body).data
+      data.forEach((value) => {
+        var data = {
+          teamID: number,
+          sensID: value.sensID,
+          val: value.val,
+          date: value.date
+        }
+        insert_to_db('temperature', data)
       })
+    })
+    request('http://10.0.0.10/api/accelerometer/'+number+'/all', function(error, response, body) {
+      var data = JSON.parse(body).data
+      data.forEach((value) => {
+        var data = {
+          teamID: number,
+          sensID: value.sensID,
+          val_x: value.val_x,
+          val_y: value.val_y,
+          val_z: value.val_z,
+          date: value.date
+        }
+        insert_to_db('accelerometer', data)
+      })
+
+    })
+
+    request('http://10.0.0.10/api/din1/'+number+'/all', function(error, response, body) {
+      var data = JSON.parse(body).data
+      data.forEach((value) => {
+        var data = {
+          teamID: number,
+          sensID: value.sensID,
+          val: value.val,
+          date: value.date
+        }
+        insert_to_db('din1', data)
+      })
+
     })
   })
 }
