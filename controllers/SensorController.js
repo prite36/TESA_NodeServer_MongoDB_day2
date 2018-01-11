@@ -39,18 +39,18 @@ function find_from_db(table, start, stop){
       })
     })
 }
-function find_from_db_Showweb(table){
-    var schema = db.model(table);
-    return new Promise(resolve => {
-      schema.find({}).exec(function (err, result) {
-          if (err){
-            console.log(error);
-          } else {
-            resolve(result)
-          }
-      })
-    })
-}
+// function find_from_db_Showweb(table){
+//     var schema = db.model(table);
+//     return new Promise(resolve => {
+//       schema.find({}).exec(function (err, result) {
+//           if (err){
+//             console.log(error);
+//           } else {
+//             resolve(result)
+//           }
+//       })
+//     })
+// }
 function checkData(data) {
   if (data.statusCode == '00') {
     return data.data
@@ -68,13 +68,12 @@ async function mixData(start, stop) {
   data.din1 = din1
   return data
 }
-async function mixDaTaweb(sensor) {
-  let data = {}
-  updateShow(sensor)
-  let datasensor = await find_from_db_Showweb(sensor)
-  data = datasensor
-  return data
-}
+// async function mixDaTaweb(sensor) {
+//   let data = {}
+//   let datasensor = await find_from_db_Showweb(sensor)
+//   data = datasensor
+//   return data
+// }
 
 schemaController.save = function(req, res) {
   var teamNumber = [11,12,13,14,15,16,18,19,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,37,38,40,43,44,46,47,48,49,50,52,53,54,60,61]
@@ -150,9 +149,9 @@ schemaController.allTeamSensor = function(req, res) {
     res.send(value)
   })
 }
-schemaController.showtoweb = function(sensor) {
-  mixDaTaweb(sensor).then(value => {
-    res.send(value)
-  })
-}
+// schemaController.showtoweb = function(sensor) {
+//   mixDaTaweb(sensor).then(value => {
+//     return (value)
+//   })
+// }
 module.exports = schemaController;

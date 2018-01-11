@@ -2,18 +2,20 @@
 <html>
 
 <head>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css" integrity="sha384-Zug+QiDoJOrZ5t4lssLdxGhVrurbmBWopoEl+M6BdEfwnCJZtKxi1KgxUyJq13dy" crossorigin="anonymous">
+  <link rel="stylesheet" href="vendor/datables/dataTables.bootstrap4.css">
   <% include header.ejs %>
 </head>
 
 <body>
-  <h2 align="center">digitalinput</h2>
+  <h2 align="center">accelerometor</h2>
   <table class="table">
   <thead>
     <tr>
       <th scope="col">sensID</th>
       <th scope="col">teamID</th>
-      <th scope="col">val</th>
+      <th scope="col">val_x</th>
+      <th scope="col">val_y</th>
+      <th scope="col">val_z</th>
       <th scope="col">date</th>
     </tr>
   </thead>
@@ -22,7 +24,9 @@
     <tr>
       <th scope="row"><%= data[i].sensID %></th>
       <td><%= data[i].teamID %></td>
-      <td><%= data[i].val %></td>
+      <td><%= data[i].val_x %></td>
+      <td><%= data[i].val_y %></td>
+      <td><%= data[i].val_z %></td>
       <td><%= data[i].date %></td>
     </tr>
     <% } %>
