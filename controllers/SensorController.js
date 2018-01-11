@@ -81,62 +81,70 @@ schemaController.save = function(req, res) {
   teamNumber.forEach((number) => {
     request('http://10.0.0.10/api/temperature/'+number+'/all', function(error, response, body) {
       console.log('request temperature');
-      if (!body.includes("502 Bad Gateway")) {
-        let getdata = JSON.parse(body)
-        if (getdata.statusCode === '00') {
-          getdata.data.forEach((value) => {
-            let data = {
-              teamID: number,
-              sensID: value.sensID,
-              val: value.val,
-              date: value.date
-            }
-            insert_to_db('temperature', data)
-          })
+      try {
+        if (!body.includes("502 Bad Gateway")) {
+          let getdata = JSON.parse(body)
+          if (getdata.statusCode === '00') {
+            getdata.data.forEach((value) => {
+              let data = {
+                teamID: number,
+                sensID: value.sensID,
+                val: value.val,
+                date: value.date
+              }
+              insert_to_db('temperature', data)
+            })
+          }
+        } else {
+          console.log('temperature Bad Gateway');
         }
-      } else {
-        console.log('temperature Bad Gateway');
-      }
+      } catch (err) { console.error('includes error', err.message) }
+
     })
     request('http://10.0.0.10/api/accelerometer/'+number+'/all', function(error, response, body) {
       console.log('request accelerometer');
-      if (!body.includes("502 Bad Gateway")) {
-        let getdata = JSON.parse(body)
-        if (getdata.statusCode === '00') {
-          getdata.data.forEach((value) => {
-            var data = {
-              teamID: number,
-              sensID: value.sensID,
-              val_x: value.val_x,
-              val_y: value.val_y,
-              val_z: value.val_z,
-              date: value.date
-            }
-            insert_to_db('accelerometer', data)
-          })
+      try {
+        if (!body.includes("502 Bad Gateway")) {
+          let getdata = JSON.parse(body)
+          if (getdata.statusCode === '00') {
+            getdata.data.forEach((value) => {
+              var data = {
+                teamID: number,
+                sensID: value.sensID,
+                val_x: value.val_x,
+                val_y: value.val_y,
+                val_z: value.val_z,
+                date: value.date
+              }
+              insert_to_db('accelerometer', data)
+            })
+          }
+        } else {
+          console.log('temperature Bad Gateway');
         }
-      } else {
-        console.log('temperature Bad Gateway');
-      }
+      } catch (err) { console.error('includes error', err.message) }
+
     })
     request('http://10.0.0.10/api/din1/'+number+'/all', function(error, response, body) {
       console.log('request din1');
-      if (!body.includes("502 Bad Gateway")) {
-        let getdata = JSON.parse(body)
-        if (getdata.statusCode === '00') {
-          getdata.data.forEach((value) => {
-            var data = {
-              teamID: number,
-              sensID: value.sensID,
-              val: value.val,
-              date: value.date
-            }
-            insert_to_db('din1', data)
-          })
+      try {
+        if (!body.includes("502 Bad Gateway")) {
+          let getdata = JSON.parse(body)
+          if (getdata.statusCode === '00') {
+            getdata.data.forEach((value) => {
+              var data = {
+                teamID: number,
+                sensID: value.sensID,
+                val: value.val,
+                date: value.date
+              }
+              insert_to_db('din1', data)
+            })
+          }
+        } else {
+          console.log('temperature Bad Gateway');
         }
-      } else {
-        console.log('temperature Bad Gateway');
-      }
+      } catch (err) { console.error('includes error', err.message) }
     })
 
   })
