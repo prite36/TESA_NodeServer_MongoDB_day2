@@ -4,7 +4,6 @@ var request = require('request');
 var sensor = require("../controllers/SensorController.js");
 var valueDemo = require("./value.js");
 var http = require('http');
-Get api
 router.get('/', function(req, res) {
   res.send('ssss')
 });
