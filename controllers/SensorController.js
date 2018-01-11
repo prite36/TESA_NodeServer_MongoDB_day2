@@ -10,50 +10,71 @@ function insert_to_db(table, row){
     var schema = db.model(table);
     var data = new schema(row);
     data.save(function(err, result){
-        if (err) throw(err);
+        if (err){
+          console.log(error);
+        } else {
+          console.log('Pass');
+        }
     });
 }
-
+function checkData(data) {
+  if (data.statusCode == '00') {
+    return data.data
+  } else {
+    return 'no data'
+  }
+}
 schemaController.save = function(req, res) {
-  var agent = new http.Agent({
-        host: 'localhost',
-        port: '3000',
-        path: '/',
-        rejectUnauthorized: false
-    });
-  var options = ({
-        method: 'GET',
-        agent: agent,
-        header: { 'Content-Type': 'aaplication/json'}
-    });
-  // request('http://10.0.0.10/api/temperature/5/all', function(error, response, body) {
-  options.url = 'http://localhost:3000/api/demo/temperature'
-  request(options, function(error, response, body) {
-  var getdata = JSON.parse(body).data
-    getdata.forEach((value) => {
-      var data = {
-        teamID: req.params.id,
-        sensID: value.sensID,
-        val: value.val,
-        date: value.date
+  var teamNumber = [11,12,13,14,15,16,18,19,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,37,38,40,43,44,46,47,48,49,50,52,53,54,60,61]
+  // var teamNumber = [5]
+  teamNumber.forEach((number) => {
+    console.log(number);
+    request('http://10.0.0.10/api/temperature/'+number+'/all', function(error, response, body) {
+      let getdata = JSON.parse(body)
+      if (getdata.statusCode === '00') {
+        getdata.data.forEach((value) => {
+          let data = {
+            teamID: number,
+            sensID: value.sensID,
+            val: value.val,
+            date: value.date
+          }
+          console.log(data)
+          insert_to_db('temperature', data)
+        })
       }
-      insert_to_db('temperature', data);
     })
-  })
-  options.url = 'http://localhost:3000/api/demo/accelerometer'
-  request(options, function(error, response, body) {
-  var getdata = JSON.parse(body).data
-    getdata.forEach((value) => {
-      var data = {
-        teamID: req.params.id,
-        sensID: value.sensID,
-        val_x: value.val_x,
-        val_y: value.val_y,
-        val_z: value.val_z,
-        date: value.date
+    request('http://10.0.0.10/api/accelerometer/'+number+'/all', function(error, response, body) {
+      let getdata = JSON.parse(body)
+      if (getdata.statusCode === '00') {
+        getdata.data.forEach((value) => {
+          var data = {
+            teamID: number,
+            sensID: value.sensID,
+            val_x: value.val_x,
+            val_y: value.val_y,
+            val_z: value.val_z,
+            date: value.date
+          }
+          insert_to_db('accelerometer', data)
+        })
       }
-      insert_to_db('accelerometer', data);
     })
+    request('http://10.0.0.10/api/din1/'+number+'/all', function(error, response, body) {
+      let getdata = JSON.parse(body)
+      if (getdata.statusCode === '00') {
+        getdata.data.forEach((value) => {
+          var data = {
+            teamID: number,
+            sensID: value.sensID,
+            val: value.val,
+            date: value.date
+          }
+          insert_to_db('din1', data)
+        })
+      }
+    })
+
   })
 }
 module.exports = schemaController;

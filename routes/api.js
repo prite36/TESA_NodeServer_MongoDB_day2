@@ -13,7 +13,7 @@ router.get('/demo/:item', function(req, res) {
 router.get('/sensor', function(req, res) {
   res.render('../views/sensor/index')
 });
-router.get('/getDataSensor/:id', function(req, res) {
+router.get('/getDataSensor', function(req, res) {
   sensor.save(req, res)
 
 });
