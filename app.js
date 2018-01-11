@@ -8,6 +8,9 @@ var bodyParser = require('body-parser');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var api = require('./routes/api');
+var temperature = require('./routes/temperature');
+var accelerometor = require('./routes/accelerometor');
+var digitalinput = require('./routes/digitalinput');
 
 var app = express();
 
@@ -26,7 +29,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/api', api);
-
+app.use('/temperature', temperature);
+app.use('/accelerometor', accelerometor);
+app.use('/digitalinput', digitalinput);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
