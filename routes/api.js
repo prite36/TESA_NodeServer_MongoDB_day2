@@ -2,7 +2,6 @@ var express = require('express');
 var router = express.Router();
 var request = require('request');
 var sensor = require("../controllers/SensorController.js");
-var valueDemo = require("./value.js");
 var http = require('http');
 router.get('/getDataSensor', function(req, res) {
   sensor.save(req, res)
