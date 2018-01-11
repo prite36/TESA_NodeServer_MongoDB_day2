@@ -39,6 +39,18 @@ function find_from_db(table, start, stop){
       })
     })
 }
+function find_from_db_Showweb(table){
+    var schema = db.model(table);
+    return new Promise(resolve => {
+      schema.find({}).exec(function (err, result) {
+          if (err){
+            console.log(error);
+          } else {
+            resolve(result)
+          }
+      })
+    })
+}
 function checkData(data) {
   if (data.statusCode == '00') {
     return data.data
@@ -54,6 +66,13 @@ async function mixData(start, stop) {
   data.temperature = temperature
   data.accelerometer = accelerometer
   data.din1 = din1
+  return data
+}
+async function mixDaTaweb(sensor) {
+  let data = {}
+  updateShow(sensor)
+  let datasensor = await find_from_db_Showweb(sensor)
+  data = datasensor
   return data
 }
 
@@ -130,6 +149,10 @@ schemaController.allTeamSensor = function(req, res) {
   mixData(start, stop).then(value => {
     res.send(value)
   })
-
+}
+schemaController.showtoweb = function(sensor) {
+  mixDaTaweb(sensor).then(value => {
+    res.send(value)
+  })
 }
 module.exports = schemaController;
