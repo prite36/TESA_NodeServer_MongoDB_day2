@@ -15,7 +15,8 @@ router.get('/sensor', function(req, res) {
 });
 router.get('/getDataSensor', function(req, res) {
   sensor.save(req, res)
-
 });
-
+router.get('/allTeamSensor', function(req, res) {
+  sensor.allTeamSensor(req, res)
+});
 module.exports = router;
