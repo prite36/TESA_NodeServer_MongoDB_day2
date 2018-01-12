@@ -21,6 +21,22 @@
 
 <body>
   <h1 align="center">Alert</h1>
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">teamID</th>
+      <th scope="col">description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% for(var i=0; i < data.length; i++) { %>
+    <tr>
+      <td><%= data[i].teamID %></td>
+      <td><%= data[i].description %></td>
+    </tr>
+    <% } %>
+  </tbody>
+</table>
 </body>
 
 </html>

@@ -26,7 +26,7 @@ function insert_to_db(table, row){
   })
 
 }
-function find_from_db(table, start, stop){
+function find_from_db(table, start, stop) {
     var schema = db.model(table);
     var query = { date: { $gte:'2018-01-11 ' + start + ':00', $lte:'2018-01-11 ' + stop + ':00',} }
     return new Promise(resolve => {
@@ -140,4 +140,16 @@ schemaController.allTeamSensor = function(req, res) {
     res.send(value)
   })
 }
+
+// schemaController.saveAlert = function(req, res, alertdata) {
+//   var schema = db.model('alert');
+//   var data = new schema(1);
+//   data.save(function(err, result, alertdata){
+//     if (err){
+//       console.log(err);
+//     } else {
+//       console.log('savealert');
+//     }
+//   });
+// }
 module.exports = schemaController;

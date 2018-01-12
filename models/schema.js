@@ -1,6 +1,15 @@
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
 
+var alert = new Schema({
+    teamID: {
+        type: Number
+    },
+    description: {
+        type: String
+    }
+});
+
 var pressure = new Schema({
     teamID: {
         type: Number
@@ -164,3 +173,4 @@ module.exports = mongoose.model('din3', din);
 module.exports = mongoose.model('din4', din);
 module.exports = mongoose.model('din5', din);
 module.exports = mongoose.model('allTeam', allTeam);
+module.exports = mongoose.model('alert', alert);
